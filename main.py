@@ -1,7 +1,11 @@
 from PIL import Image, ImageDraw
 from itertools import combinations
 from logic import xor
+import os
 lineList = 'ABCDEFGHIJK'
+
+if not os.path.exists('./results'):
+   os.makedirs('./results')
 
 #set up constants for size constraints
 x = 5
@@ -25,7 +29,8 @@ black = (0, 0, 0)
 
 #Take an input string and create an image of the coresponding rune
 def runeToPic(s):
-	filename = s + ".png"
+	filename = F"./results/{s}.png"
+	print(filename)
 	im = Image.new('RGB', (width, height), white)
 	d = ImageDraw.Draw(im)
 
@@ -53,7 +58,7 @@ def runeToPic(s):
 	}
 	for char in s:
 		d.line(runeLineSwitch[char], black)
-	im.save(filename)	
+	im.save(filename)
 
 
 #gets all possible combinations of lineList that are n long
@@ -140,7 +145,7 @@ def drawSheet(runeList, name):
 		yloc = (num // spriteWidth) * height
 		drawRuneSprite(xloc, yloc, dr, rune)
 		num += 1
-	img.save(name + '.png')
+	img.save(F"./results/{name}.png")
 
 def drawRuneSprite(xn, yn, dr, rune):
 	xtemp = x + xn
@@ -170,7 +175,8 @@ def drawRuneSprite(xn, yn, dr, rune):
 	for c in rune:
 		dr.line(runeLine[c], black)
 
+runeToPic("AKBJ")
 
 #print(isMirrorable("AKBJ"))		
-for i in range(1,11):
-	runeSheetCreate(i)
+# for i in range(1,11):
+# 	runeSheetCreate(i)
